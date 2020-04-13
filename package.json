@@ -1,0 +1,54 @@
+{
+  "name": "elite-community-bot",
+  "version": "1.0.0",
+  "description": "Elite: Dangerous Squadron Management Bot",
+  "main": "./build/app.js",
+  "scripts": {
+    "clean": "echo Clearing current build... && rm -rf ./build",
+    "compile:typescript": "echo Compiling TypeScript... && tsc --build",
+    "build": "npm run clean && npm run compile:typescript",
+    "prepare": "echo Preparing build... && npm run build",
+    "dev": "nodemon",
+    "prod": "clear && cross-env NODE_ENV=production node ./build/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IronicPickle/elite-community-bot.git"
+  },
+  "author": "IronicPickle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IronicPickle/elite-community-bot/issues"
+  },
+  "homepage": "https://github.com/IronicPickle/elite-community-bot#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cross-env": "^6.0.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.7",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "typescript": "^3.6.4"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.1",
+    "@types/mongoose": "^5.7.8",
+    "@types/node": "^12.11.1",
+    "@types/request": "^2.48.4",
+    "@types/request-promise": "^4.1.45",
+    "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules"
+    ],
+    "watch": [
+      "src/**/*"
+    ],
+    "ext": "ts json",
+    "exec": "clear && cross-env NODE_ENV=development ts-node -T ./src/app.ts"
+  }
+}

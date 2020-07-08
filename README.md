@@ -19,11 +19,13 @@ npm run build - Compiles and builds the application.
 ```
 port: number - The port the web server will listen on. (8081)
 
-master.url: string - The URL of the master server. (http://localhost:8080)
-master.token: string - A unique authorisation token used to authenticate against the master server. This should match the token configured on the master server.
-master.publicUrl: string - The public URL of the master server. If this isn't configured, master.url will be used instead.
+master:
+  url: string - The URL of the master server. (http://localhost:8080)
+  token: string - A unique authorisation token used to authenticate against the master server. This should match the token configured on the master server.
+  publicUrl: string - The public URL of the master server. If this isn't configured, master.url will be used instead.
 
-discord.token: string - A discord client token generated via the discord developer portal.
-discord.prefix: string - A prefix used to call commands on discord. (!)
-discord.ownerIds: string[] - An array of user IDs who will override permission requirements.
+discord:
+  token: string - A discord client token generated via the discord developer portal.
+  prefix: string - A prefix used to call commands on discord. (!)
+  ownerIds: string[] - An array of user IDs who will override permission requirements.
 ```

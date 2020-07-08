@@ -1,26 +1,24 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import { Express } from "express-serve-static-core";
 import routes from "./routes";
 import http from "http";
+import { logger } from "../app";
+import { backendConfig } from "../utils/BackendConfig";
 
-export class NodeServer {
-  public port: string;
-  public environment: string | undefined;
-  private dev: boolean;
+export default class NodeServer {
+  public port: number;
 
   private server: Express;
   private httpInstance: http.Server | null;
   private publicPath: string;
 
   constructor() {
-    this.port = process.env.PORT || "8080";
-    this.environment = process.env.NODE_ENV; // Node Environment
-    this.dev = this.environment !== "production";
+    this.port = backendConfig.port;
 
-    this.server = express(); // Initialise express
-    this.httpInstance = null
+    this.server = express();
+    this.httpInstance = null;
     
     this.publicPath = path.join(__dirname, "../../client/build");
     this.server.use(express.static(this.publicPath));
@@ -33,20 +31,38 @@ export class NodeServer {
     return new Promise((resolve, reject) => {
       const server = this.server;
       const port = this.port;
+
       this.httpInstance = server.listen(port, () => {
         if(!this.httpInstance) {
-          reject(); return;
+          reject("[HTTP] No HTTP instance found"); return;
         }
 
-        // Express routes
-        server.use("/api", routes.api);
-
-        server.all("*", (req: any, res: any, next: any) => {
-          if(this.dev) console.log(req.method, req.url, "from", req.ip);
-          res.status(404).send("Not found");
+        server.all("*", (req: Request, res: Response, next: NextFunction) => {
+          logger.http(`[${req.method}] ${req.url} from ${req.ip}`);
+          return next();
         });
 
-        resolve(this);
+        for(const i in routes) {
+          server.use(i, routes[i]);
+        }
+
+        server.all("*", (req: Request, res: Response, next: NextFunction) => {
+          res.status(404).send("Not found");
+
+          return next();
+        });
+
+        server.use((err: any, req: Request, res: Response, next: NextFunction) => {
+          if(err.code === "UNAUTHORISED") {
+            logger.http(`[UNAUTHORISED] ${req.url} from ${req.ip}`);
+            res.status(401).send({ success: false, msg: "Unauthorised" });
+          }
+
+          return next();
+
+        });
+
+        resolve();
       });
       
     });

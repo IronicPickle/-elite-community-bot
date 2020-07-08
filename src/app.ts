@@ -1,25 +1,71 @@
-import dotenv from "dotenv";
-import { NodeServer } from "./server/NodeServer";
-import mongoose from "mongoose";
+import NodeServer from "./server/NodeServer";
+import DiscordBot from "./discord/DiscordBot"
+import EventHandler from "./discord/EventHandler";
+import Config from "./utils/Config";
+import applicationCheck from "./utils/routine";
+import winston, { transports } from "winston";
+import { exit } from "process";
+import BackendConfig, { backendConfig } from "./utils/BackendConfig";
+import figlet from "figlet";
 
-console.log("\nStarting...\n");
+const logLevel = (process.env.NODE_ENV === "production" ? "info" : "debug");
 
-const env: dotenv.DotenvConfigOutput = dotenv.config(); // Pull env vars from ' .env ' file
-if(env.error) console.log("No environment file, using defaults");
+export const logger = winston.createLogger({
+  level: logLevel,
+  format: winston.format.simple(),
+  transports: [
+    new transports.Console(),
+    new transports.File({ filename: "./log/error.log", level: "error" }),
+    new transports.File({ filename: "./log/combined.log" })
+  ],
+  exceptionHandlers: [
+    new transports.Console(),
+    new transports.File({ filename: "./log/exceptions.log" })
+  ]
+});
 
-const nodeServer = new NodeServer();
-nodeServer.start().then(() => {
-  console.log("\nStarted in:", nodeServer.environment, "mode");
-  console.log("Listening on:", nodeServer.port, "\n");
-}).catch(console.error);
+console.log("\n#========================================================#");
+console.log(`${figlet.textSync(" Companion", { font: "Doom" })}`);
+console.log("#========================================================#\n");
 
-const dbAddress = process.env.DB_ADDRESS || "mongodb://localhost/eliteCDB";
-mongoose.connect(dbAddress, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then((db) => {
-  console.log(`[Mongoose] Connection created to: ${dbAddress}`);
-}).catch((err) => {
-  console.log(`[Mongoose] Connection failed to: ${dbAddress}`);
-  console.log(err);
+export let nodeServer: NodeServer;
+export let discordBot: DiscordBot;
+
+logger.info("[Node] Initialising");
+
+Config.load().then(() => {
+  BackendConfig.load().then(() => {
+    if(!backendConfig.master.token) throw new Error("[Config] No master token configured");
+    nodeServer = new NodeServer();
+    discordBot = new DiscordBot();
+    const environment = process.env.NODE_ENV;
+    logger.info(`[Node] Environment: ${environment}`);
+
+    nodeServer.start().then(() => {
+      logger.info(`[Node] Listening on: ${nodeServer.port}`);
+    }).catch((err: Error) => {
+      logger.error(err);
+      exit();
+    });
+
+    discordBot.start().then(() => {
+      const clientUser = discordBot.client.user;
+      if(clientUser) logger.info(`[Discord] Logged in as: ${clientUser.username}`);
+
+      EventHandler.registerAll(discordBot.client);
+
+      applicationCheck();
+    }).catch((err: Error) => {
+      logger.error(err);
+      exit();
+    });
+
+  }).catch((err: Error) => {
+    logger.error(err);
+    exit();
+  });
+
+}).catch((err: Error) => {
+  logger.error(err);
+  exit();
 });

@@ -27,5 +27,5 @@ master:
 discord:
   token: string - A discord client token generated via the discord developer portal.
   prefix: string - A prefix used to call commands on discord. (!)
-  ownerIds: string[] - An array of user IDs who will override permission requirements.
+  ownerIds: string[] - An array of user IDs who will override permission requirements. ([])
 ```

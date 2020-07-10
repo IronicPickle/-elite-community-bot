@@ -3,8 +3,8 @@ import HTTPMembers from "../../http_utils/HTTPMembers";
 import { Message } from "discord.js";
 import InputListener from "../objects/InputListener";
 import EmbedBuilders from "../utils/EmbedBuilders";
-import fetchDbMember from "../objects/DbMember";
-import StringBuilder from "../utils/stringBuilders";
+import fetchDbMember from "../objects/DBMember";
+import StringBuilder from "../utils/StringBuilders";
 import { logger } from "../../app";
 import { config } from "../../utils/Config";
 

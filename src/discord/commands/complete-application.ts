@@ -1,8 +1,8 @@
 import { Command, Client, CommandoMessage } from "discord.js-commando";
 import { Message } from "discord.js";
 import InputListener from "../objects/InputListener";
-import embedBuilders from "../utils/embedBuilders";
-import fetchDbMember from "../objects/DbMember";
+import EmbedBuilders from "../utils/EmbedBuilders";
+import fetchDbMember from "../objects/DBMember";
 import StringBuilders from "../utils/StringBuilders";
 import { logger } from "../../app";
 import { config } from "../../utils/Config";
@@ -53,7 +53,7 @@ export default class CompleteApplication extends Command {
         const success = targetDbMember.completeApplication(guildMember.id);
         if(!success) return promptMessage.edit(StringBuilders.internalError());
 
-        let embed = embedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);
+        let embed = EmbedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);
         promptMessage.edit({ content: `${targetGuildMember}'s application has been completed.`, embed });
 
       });

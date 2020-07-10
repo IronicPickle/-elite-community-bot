@@ -1,6 +1,6 @@
 import { User, MessageEmbed, GuildMember } from "discord.js";
 import moment from "moment";
-import { DBMember } from "../objects/DbMember";
+import { DBMember } from "../objects/DBMember";
 import discord from "../../utils/discord";
 import { FactionsData } from "../../routes/api";
 import { config } from "../../utils/Config";

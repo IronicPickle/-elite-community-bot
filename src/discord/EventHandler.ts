@@ -2,7 +2,7 @@ import { CommandoClient } from "discord.js-commando";
 import { GuildMember, Role } from "discord.js";
 import HTTPMembers from "../http_utils/HTTPMembers";
 import discord from "../utils/discord";
-import fetchDbMember from "./objects/DbMember";
+import fetchDbMember from "./objects/DBMember";
 import StringBuilder from "./utils/StringBuilders";
 import { logger } from "../app";
 

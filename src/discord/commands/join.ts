@@ -1,6 +1,6 @@
 import { Command, Client, CommandoMessage } from "discord.js-commando";
 import StringBuilders from "../utils/StringBuilders";
-import fetchDbMember from "../objects/DbMember";
+import fetchDbMember from "../objects/DBMember";
 import { logger } from "../../app";
 import { config } from "../../utils/Config";
 

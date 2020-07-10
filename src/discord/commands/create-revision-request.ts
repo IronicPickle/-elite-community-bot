@@ -1,9 +1,9 @@
 import { Command, Client, CommandoMessage } from "discord.js-commando";
 import { Message } from "discord.js";
 import InputListener from "../objects/InputListener";
-import embedBuilders from "../utils/embedBuilders";
+import EmbedBuilders from "../utils/EmbedBuilders";
 import Validation from "../../utils/Validation";
-import fetchDbMember from "../objects/DbMember";
+import fetchDbMember from "../objects/DBMember";
 import StringBuilders from "../utils/StringBuilders";
 import { logger } from "../../app";
 import { config } from "../../utils/Config";
@@ -50,7 +50,7 @@ export default class CreateRevisionRequest extends Command {
         if(targetDbMember.applicationStatus.stage === 0) return promptMessage1.edit(`${targetGuildMember}'s application has not started.`);
         if(targetDbMember.applicationStatus.stage === 3) return promptMessage1.edit(`${targetGuildMember}'s application has already been completed.`);
 
-        let embed = embedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);
+        let embed = EmbedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);
         await promptMessage1.edit({ content: "", embed });
 
         const promptMessage2 = <Message> await commandoMessage.say("Loading...");
@@ -66,7 +66,7 @@ export default class CreateRevisionRequest extends Command {
           const success = targetDbMember.createRevisionRequest(guildMember.id, { message });
           if(!success) return promptMessage1.edit(StringBuilders.internalError());
 
-          let embed = embedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);
+          let embed = EmbedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);
           promptMessage1.edit({ content: `A revision request has been sent to ${targetGuildMember}.`, embed });
 
         });

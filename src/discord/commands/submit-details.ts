@@ -1,9 +1,8 @@
 import { Command, Client, CommandoMessage } from "discord.js-commando";
-import members from "../../http_utils/HTTPMembers";
 import { Message } from "discord.js";
 import Validation from "../../utils/Validation";
 import InputListener from "../objects/InputListener";
-import fetchDbMember from "../objects/DbMember";
+import fetchDbMember from "../objects/DBMember";
 import StringBuilders from "../utils/StringBuilders";
 import { logger } from "../../app";
 import { config } from "../../utils/Config";

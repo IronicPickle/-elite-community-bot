@@ -1,6 +1,6 @@
 import { GuildMember } from "discord.js";
-import { CommandoClient, Command, CommandGroup } from "discord.js-commando";
-import { DBMember } from "../objects/DbMember";
+import { Command, CommandGroup } from "discord.js-commando";
+import { DBMember } from "../objects/DBMember";
 import { discordBot } from "../../app";
 import { config } from "../../utils/Config";
 

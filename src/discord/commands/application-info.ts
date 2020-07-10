@@ -1,7 +1,7 @@
 import { Command, Client, CommandoMessage } from "discord.js-commando";
 import { GuildMember } from "discord.js";
-import embedBuilders from "../utils/embedBuilders";
-import fetchDbMember from "../objects/DbMember";
+import EmbedBuilders from "../utils/EmbedBuilders";
+import fetchDbMember from "../objects/DBMember";
 import StringBuilders from "../utils/StringBuilders";
 import { logger } from "../../app";
 import { config } from "../../utils/Config";
@@ -29,7 +29,7 @@ export default class ApplicationInfo extends Command {
       if(!dbMember) return message.reply(StringBuilders.internalError());
       
       message.reply("\n> I've sent you a DM with your application info.");
-      return guildMember.send(embedBuilders.applicationInfo(guildMember.user, dbMember));
+      return guildMember.send(EmbedBuilders.applicationInfo(guildMember.user, dbMember));
 
     }).catch((err: Error) => {
       message.reply(StringBuilders.internalError());

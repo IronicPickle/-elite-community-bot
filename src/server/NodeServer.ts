@@ -47,12 +47,6 @@ export default class NodeServer {
           logger.info(`[Node] Registered route '${i}'`);
         }
 
-        server.all("*", (req: Request, res: Response, next: NextFunction) => {
-          res.status(404).send("Not found");
-
-          return next();
-        });
-
         server.use((err: any, req: Request, res: Response, next: NextFunction) => {
           if(err.code === "UNAUTHORISED") {
             logger.http(`[UNAUTHORISED] ${req.url} from ${req.ip}`);
@@ -61,6 +55,13 @@ export default class NodeServer {
 
           return next();
 
+        });
+
+        
+        server.all("*", (req: Request, res: Response, next: NextFunction) => {
+          res.status(404).send("Not found");
+
+          return next();
         });
 
         resolve();

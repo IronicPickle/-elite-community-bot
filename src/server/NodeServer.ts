@@ -44,6 +44,7 @@ export default class NodeServer {
 
         for(const i in routes) {
           server.use(i, routes[i]);
+          logger.info(`[Node] Registered route '${i}'`);
         }
 
         server.all("*", (req: Request, res: Response, next: NextFunction) => {

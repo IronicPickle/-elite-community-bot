@@ -7,7 +7,6 @@
     "clean": "echo Clearing current build... && rm -rf ./build",
     "compile:typescript": "echo Compiling TypeScript... && tsc --build",
     "build": "npm run clean && npm run compile:typescript",
-    "prepare": "echo Preparing build... && npm run build",
     "dev": "nodemon",
     "prod": "cross-env NODE_ENV=production forever start ./build/app.js && echo Started production server",
     "stop": "forever stop ./build/app.js && echo Stopped production server",

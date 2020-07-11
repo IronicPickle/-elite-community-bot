@@ -1,5 +1,4 @@
 import { Guild, GuildMember, TextChannel, MessageEmbed } from "discord.js";
-import { CommandoClient } from "discord.js-commando";
 import { discordBot } from "../app";
 import { config } from "./Config";
 

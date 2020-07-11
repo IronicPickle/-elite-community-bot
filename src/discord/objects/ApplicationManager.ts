@@ -1,6 +1,6 @@
 import { Client, CommandoClient } from "discord.js-commando";
 import { TextChannel, Message, GuildMember, Guild, User, MessageReaction, PartialUser, MessageEmbed } from "discord.js";
-import HTTPMembers, { CreateRevisionRequestOptions } from "../../http_utils/HTTPMembers";
+import HTTPMembers from "../../http_utils/HTTPMembers";
 import InputListener from "./InputListener";
 import Validation from "../../utils/Validation";
 import EmbedBuilders from "../utils/EmbedBuilders";

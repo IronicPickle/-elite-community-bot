@@ -9,7 +9,9 @@
     "build": "npm run clean && npm run compile:typescript",
     "prepare": "echo Preparing build... && npm run build",
     "dev": "nodemon",
-    "prod": "clear && cross-env NODE_ENV=production node ./build/app.js"
+    "prod": "cross-env NODE_ENV=production forever start ./build/app.js && echo Started production server",
+    "stop": "forever stop ./build/app.js && echo Stopped production server",
+    "restart": "npm run stop && npm run prod"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "discord.js-commando": "git+https://github.com/discordjs/Commando.git",
     "express": "^4.17.1",
     "figlet": "^1.4.0",
+    "forever": "^3.0.0",
     "jsonschema": "^1.2.6",
     "moment": "^2.27.0",
     "mongoose": "^5.9.20",

@@ -30,7 +30,7 @@ export default class ConfigBgsChannel extends Command {
       const promptMessage = <Message> await commandoMessage.say("Loading...");
       const inputListener = new InputListener(this.client, promptMessage, guildMember);
 
-      inputListener.start("# the channel you could like to use for bgs broadcasts.", async (listenerMessage?: Message) => {
+      inputListener.start("# the channel you could like to use for BGS broadcasts.", async (listenerMessage?: Message) => {
         if(!listenerMessage) return promptMessage.edit("\`Cancelled\`");
 
         const channel = listenerMessage.mentions.channels.first();
@@ -39,7 +39,7 @@ export default class ConfigBgsChannel extends Command {
         config.bgsChannelId = channel.id;
         Config.save();
 
-        await promptMessage.edit(`${channel} will now be used as the log channel.`);
+        await promptMessage.edit(`${channel} will now be used as the BGS channel.`);
       });
 
     }).catch((err: Error) => {

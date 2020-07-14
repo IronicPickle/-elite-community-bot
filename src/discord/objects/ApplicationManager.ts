@@ -118,7 +118,7 @@ export default class ApplicationManager {
 
   buildData(index: number): { embed: MessageEmbed, content: string } {
 
-    const stages = ["Not Started", "In Progress", "Rewviewed", "Completed"];
+    const stages = ["Not Started", "In Progress", "Reviewed", "Completed"];
     let embed = new MessageEmbed();
     let content = "";
     

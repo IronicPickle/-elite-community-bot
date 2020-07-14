@@ -50,7 +50,22 @@ export default class CompleteApplication extends Command {
         if(targetDbMember.applicationStatus.stage === 1) return promptMessage.edit(`${targetGuildMember}'s application has not been reviewed.`);
         if(targetDbMember.applicationStatus.stage === 3) return promptMessage.edit(`${targetGuildMember}'s application has already been completed.`);
 
-        const success = targetDbMember.completeApplication(guildMember.id);
+        const errors: string[] = [];
+
+        if(!targetDbMember.joinedSquadron) errors.push("Joined Squadron must be ticked.");
+        if(!targetDbMember.joinedInaraSquadron) errors.push("Joined Inara Squadron must be ticked.");
+        if(targetDbMember.inaraName.length <= 0) errors.push("Inara Name is required.");
+        if(targetDbMember.inGameName.length <= 0) errors.push("In-Game Name is required.");
+
+        if(errors.length !== 0) {
+          let string = `Cannot complete ${targetGuildMember}'s application.`;
+          for(const i in errors) {
+            string += `\n\`- ${errors[i]}\``;
+          }
+          return promptMessage.edit(string);
+        }
+
+        const success = await targetDbMember.completeApplication(guildMember.id);
         if(!success) return promptMessage.edit(StringBuilders.internalError());
 
         let embed = EmbedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);

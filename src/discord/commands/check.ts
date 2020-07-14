@@ -47,7 +47,7 @@ export default class Join extends Command {
         const targetDbMember = await fetchDbMember(targetGuildMember.id);
         
         if(targetDbMember) {
-          let embed = EmbedBuilders.applicationInfo(guildMember.user, targetDbMember);
+          let embed = EmbedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);
           await promptMessage.edit({ content: "", embed });
           targetDbMember.update();
         } else {
@@ -56,9 +56,9 @@ export default class Join extends Command {
             if(listenerMessage.content !== "yes") return promptMessage.edit("\`Cancelled\`");
 
             await promptMessage.edit(`Loading... [Adding ${guildMember} to the database]`);
-            const res = await HTTPMembers.create({ discordId: guildMember.id });
+            const res = await HTTPMembers.create({ discordId: targetGuildMember.id });
             if(!res.success) return promptMessage.edit(StringBuilder.internalError());
-            promptMessage.edit(`Successfully added ${guildMember} to the database.`);
+            promptMessage.edit(`Successfully added ${targetGuildMember} to the database.`);
           });
         }
       });

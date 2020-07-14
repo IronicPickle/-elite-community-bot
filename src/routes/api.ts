@@ -4,7 +4,7 @@ import StringBuilders from "../discord/utils/StringBuilders";
 import discord from "../utils/discord";
 import { GuildMember } from "discord.js";
 import EmbedBuilders from "../discord/utils/EmbedBuilders";
-import HTTPBGS from "../http_utils/HTTPBGS";
+import HTTPBGS, { FactionData } from "../http_utils/HTTPBGS";
 import authenticator from "../utils/authenticator";
 import { config } from "../utils/Config";
 import { logger } from "../app";
@@ -65,15 +65,6 @@ router.get("/members/queryStats", authenticator, wrap(async (req: Request, res: 
   res.status(200).send({ success: true, msg: "Query successful", data });
 
 }));
-
-export interface FactionData {
-  [key: string]: any;
-  id: number;
-  name: string;
-  alleigiance: string;
-  government: string;
-  isPlayer: boolean;
-}
 
 export interface FactionsData {
   id: number;

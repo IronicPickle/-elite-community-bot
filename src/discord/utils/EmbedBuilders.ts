@@ -4,6 +4,7 @@ import { DBMember } from "../objects/DBMember";
 import discord from "../../utils/discord";
 import { FactionsData } from "../../routes/api";
 import { config } from "../../utils/Config";
+import { FactionData } from "../../http_utils/HTTPBGS";
 
 export default class EmbedBuilders {
 
@@ -69,14 +70,14 @@ export default class EmbedBuilders {
   }
 
   if(faction) {
-    embed.addField("Influence", factionsData.factions.map((faction: any) => {
+    embed.addField("Influence", factionsData.factions.map((faction: FactionData) => {
       const influence = Math.floor(faction.influence * 100 * 100) / 100;
       return (
         (faction.id !== 81923) ?
           (faction.id === factionId) ?
-            `\`> ${faction.name} - ${influence}%\``
+            `\`> ${faction.name} - ${influence}% [${faction.state}]\``
           :
-            `\`${faction.name} - ${influence}%\``
+            `\`${faction.name} - ${influence}% [${faction.state}]\``
         : ""
       )
     }));

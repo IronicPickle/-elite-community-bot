@@ -45,7 +45,7 @@ const defaultConfig: ConfigSchema = {
 
     // Group: Management
     "start-manager": "MANAGE_MESSAGES",
-    "check": "ADMINISTRATOR",
+    "check": "MANAGE_MESSAGES",
     "check-all": "ADMINISTRATOR",
     "force-start-all": "ADMINISTRATOR",
     "broadcast-mission": "MANAGE_MESSAGES",
@@ -66,8 +66,8 @@ const defaultConfig: ConfigSchema = {
     // Misc
     "edit-member": "MANAGE_MESSAGES",
     "create-revision-request": "MANAGE_MESSAGES",
-    "complete-application": "ADMINISTRATOR",
-    "revert-application": "ADMINISTRATOR"
+    "complete-application": "MANAGE_MESSAGES",
+    "revert-application": "MANAGE_MESSAGES"
     
   }
 

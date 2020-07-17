@@ -1,4 +1,4 @@
-import { Guild, GuildMember, TextChannel, MessageEmbed } from "discord.js";
+import { Guild, GuildMember, TextChannel, MessageEmbed, Message } from "discord.js";
 import { discordBot } from "../app";
 import { config } from "./Config";
 
@@ -51,10 +51,13 @@ function log(content: string) {
 
 }
 
-function bgsBroadcast(content: MessageEmbed) {
+async function bgsBroadcast(content: MessageEmbed) {
 
   if(!config.bgsChannelId) return;
   const bgsChannel = getChannel(config.bgsChannelId);
-  if(bgsChannel) bgsChannel.send(content);
+  if(!bgsChannel) return;
+  const messages = await bgsChannel.messages.fetch({ limit: 100 });
+  await bgsChannel.bulkDelete(messages.filter((message: Message) => message.embeds.length > 0));
+  bgsChannel.send(content);
 
 }

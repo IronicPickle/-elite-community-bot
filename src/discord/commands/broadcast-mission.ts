@@ -47,12 +47,6 @@ export default class Join extends Command {
           if(!listenerMessage && objectives.length === 0) return promptMessage.edit("\`Cancelled\`");
           if(!listenerMessage) {
             finished = true;
-
-            if(!config.bgsChannelId) return promptMessage.edit(StringBuilders.internalError());
-            const bgsChannel = discord.getChannel(config.bgsChannelId);
-            if(!bgsChannel) return promptMessage.edit(StringBuilders.internalError());
-            const messages = await bgsChannel.messages.fetch({ limit: 100 });
-            await bgsChannel.bulkDelete(messages.filter((message: Message) => message.embeds.length > 0));
             
             const res = await HTTPMissions.broadcast(guildMember.id, { description, objectives });
             if(!res.success) return promptMessage.edit(StringBuilders.internalError());

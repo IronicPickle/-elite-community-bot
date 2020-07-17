@@ -44,7 +44,7 @@ export default class ConfigWebPerm extends Command {
         const action = listenerMessage.content;
         if(!whitelisted.includes(action)) return inputListener.start(`You can only configure the permissions of the following actions:\n${whitelistedParsed}`);
 
-        inputListener.start(`Provide the action you would like to configure.\n${whitelistedParsed}`, async (listenerMessage?: Message) => {
+        inputListener.start(`Provide the user permission you would like to bind.\n${permissionsParsed}`, async (listenerMessage?: Message) => {
           if(!listenerMessage) return promptMessage.edit("\`Cancelled\`");
           const permission = listenerMessage.content.toUpperCase();
           if(!Object.keys(Permissions.FLAGS).includes(permission)) return inputListener.start(`You must provide one of the following user permissions.\n${permissionsParsed}`);

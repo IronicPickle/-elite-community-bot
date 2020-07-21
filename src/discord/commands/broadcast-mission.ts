@@ -6,7 +6,6 @@ import HTTPMissions from "../../http_utils/HTTPMissions";
 import Validation from "../../utils/Validation";
 import { logger } from "../../app";
 import { config } from "../../utils/Config";
-import discord from "../../utils/discord";
 
 export default class Join extends Command {
   constructor(client: Client) {

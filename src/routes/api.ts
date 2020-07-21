@@ -7,7 +7,6 @@ import EmbedBuilders from "../discord/utils/EmbedBuilders";
 import HTTPBGS, { FactionData } from "../http_utils/HTTPBGS";
 import authenticator from "../utils/authenticator";
 import { config } from "../utils/Config";
-import { logger } from "../app";
 
 const router = express.Router();
 

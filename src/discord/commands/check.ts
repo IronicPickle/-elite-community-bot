@@ -2,7 +2,6 @@ import { Command, Client, CommandoMessage } from "discord.js-commando";
 import HTTPMembers from "../../http_utils/HTTPMembers";
 import { Message } from "discord.js";
 import InputListener from "../objects/InputListener";
-import EmbedBuilders from "../utils/EmbedBuilders";
 import fetchDbMember from "../objects/DBMember";
 import StringBuilder from "../utils/StringBuilders";
 import { logger } from "../../app";
@@ -15,7 +14,7 @@ export default class Join extends Command {
       aliases: [],
       group: "management",
       memberName: "check",
-      description: "Displays the application details of a member.",
+      description: "Checks if a member tracked, allowing you to track them if not.",
       userPermissions: [ config.permissions["check"] ],
       guildOnly: true,
       throttling: { usages: 2, duration: 10 }
@@ -28,6 +27,7 @@ export default class Join extends Command {
 
       const guild = commandoMessage.guild;
       const guildMember = commandoMessage.member;
+      if(guildMember == null) return null;
 
       const promptMessage = <Message> await commandoMessage.say("Loading...");
       const inputListener = new InputListener(this.client, promptMessage, guildMember);
@@ -46,11 +46,7 @@ export default class Join extends Command {
 
         const targetDbMember = await fetchDbMember(targetGuildMember.id);
         
-        if(targetDbMember) {
-          let embed = EmbedBuilders.applicationInfo(targetGuildMember.user, targetDbMember);
-          await promptMessage.edit({ content: "", embed });
-          targetDbMember.update();
-        } else {
+        if(targetDbMember == null) {
           inputListener.start(`${guildMember} was not found in the database, do you want to add them? (yes/no)`, async (listenerMessage?: Message) => {
             if(!listenerMessage) return promptMessage.edit("\`Cancelled\`");
             if(listenerMessage.content !== "yes") return promptMessage.edit("\`Cancelled\`");

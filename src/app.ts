@@ -2,7 +2,6 @@ import NodeServer from "./server/NodeServer";
 import DiscordBot from "./discord/DiscordBot"
 import EventHandler from "./discord/EventHandler";
 import Config from "./utils/Config";
-import applicationCheck from "./utils/routine";
 import winston, { transports } from "winston";
 import { exit } from "process";
 import BackendConfig, { backendConfig } from "./utils/BackendConfig";
@@ -53,8 +52,7 @@ Config.load().then(() => {
       if(clientUser) logger.info(`[Discord] Logged in as: ${clientUser.username}`);
 
       EventHandler.registerAll(discordBot.client);
-
-      applicationCheck();
+      
     }).catch((err: Error) => {
       logger.error(err);
       exit();

@@ -26,6 +26,7 @@ export default class Join extends Command {
 
       const guild = commandoMessage.guild;
       const guildMember = commandoMessage.member;
+      if(guildMember == null) return null;
 
       let string = "> Are you sure you want to check all applications? (yes/no)";
       string += "\n> [WARNING] This will add any untracked members to the database.";
@@ -45,7 +46,8 @@ export default class Join extends Command {
         if(!res.data) return promptMessage.edit("No members found in database.");
 
         const dbMembers = res.data.members;
-        const guildMembers = guild.members.cache;
+        console.log(await guild.members.fetch())
+        const guildMembers = await guild.members.fetch();
 
         let addedGuildMembers: GuildMember[] = [];
 

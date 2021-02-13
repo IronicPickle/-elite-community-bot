@@ -26,6 +26,7 @@ export default class Setup extends Command {
 
       const guild = commandoMessage.guild;
       const guildMember = commandoMessage.member;
+      if(guildMember == null) return null;
 
       let string = "> Are you sure you want to perform a first time setup? (yes/no)";
       string += "\n> [WARNING] This will reset all configuration options.";

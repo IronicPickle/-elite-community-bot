@@ -1,27 +1,28 @@
 {
-  "name": "elite-community-bot",
+  "name": "community-server-companion",
   "version": "1.0.0",
-  "description": "Elite: Dangerous Squadron Management Bot",
+  "description": "Community Web Server: Companion",
   "main": "./build/app.js",
   "scripts": {
     "clean": "echo Clearing current build... && rm -rf ./build",
     "compile:typescript": "echo Compiling TypeScript... && tsc --build",
     "build": "npm run clean && npm run compile:typescript",
-    "dev": "nodemon",
+    "dev": "cross-env NODE_ENV=development nodemon",
+    "dev-compile": "ts-node -T ./src/app.ts",
     "prod": "cross-env NODE_ENV=production forever start ./build/app.js && echo Started production server",
     "stop": "forever stop ./build/app.js && echo Stopped production server",
     "restart": "npm run stop && npm run prod"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IronicPickle/elite-community-bot.git"
+    "url": "git+https://github.com/IronicPickle/community-server-companion.git"
   },
   "author": "IronicPickle",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/IronicPickle/elite-community-bot/issues"
+    "url": "https://github.com/IronicPickle/community-server-companion/issues"
   },
-  "homepage": "https://github.com/IronicPickle/elite-community-bot#readme",
+  "homepage": "https://github.com/IronicPickle/community-server-companion#readme",
   "dependencies": {
     "@types/ws": "^7.2.5",
     "body-parser": "^1.19.0",
@@ -63,6 +64,6 @@
       "src/**/*"
     ],
     "ext": "ts json",
-    "exec": "clear && cross-env NODE_ENV=development ts-node -T ./src/app.ts"
+    "exec": "npm run dev-compile"
   }
 }

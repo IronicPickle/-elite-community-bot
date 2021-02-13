@@ -28,7 +28,7 @@ export default class NodeServer {
   }
 
   start() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const server = this.server;
       const port = this.port;
 

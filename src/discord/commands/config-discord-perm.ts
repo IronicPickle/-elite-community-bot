@@ -27,6 +27,7 @@ export default class ConfigDiscordPerm extends Command {
     new Promise(async () => {
 
       const guildMember = commandoMessage.member;
+      if(guildMember == null) return;
 
       const whitelisted: string[] = Object.keys(config.permissions);
       const whitelistedParsed: string = "```Configurable Commands:\n> " + whitelisted.toString().replace(/,/g, "\n> ") + "```";

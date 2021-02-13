@@ -24,7 +24,7 @@ export default class DiscordBot {
   }
 
   start() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if(!this.token) return reject("[Config] No discord API token configured");
 
       this.client.on("ready", () => {

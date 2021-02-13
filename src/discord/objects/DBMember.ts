@@ -1,5 +1,4 @@
-import HTTPMembers, { QueryOptions, QueryData, EditOptions, CreateRevisionRequestOptions, DBMemberData, DiscordRole } from "../../http_utils/HTTPMembers";
-import { logger } from "../../app";
+import HTTPMembers, { QueryOptions, QueryData, DBMemberData, DiscordRole } from "../../http_utils/HTTPMembers";
 
 export default async function fetchDbMember(id: string): Promise<DBMember | void> {
 
@@ -25,24 +24,6 @@ export class DBMember implements DBMemberData {
   public discordPerms: string[];
   public discordRoles: DiscordRole[];
   public discordAvatar?: string;
-  public inGameName: string;
-  public inaraName: string;
-  public joinedSquadron: boolean;
-  public joinedInaraSquadron: boolean;
-  public applicationStatus: {
-    stage: number,
-    reviewedById?: string,
-    completedById?: string,
-    revertedById?: string,
-    startDate?: Date,
-    warningSent: boolean
-  };
-  public revisionMessages: {
-    _id: string,
-    text: string,
-    authorId: string,
-    creationDate: Date
-  }[];
   public joinDate: Date;
 
   constructor(res: QueryData) {
@@ -53,13 +34,7 @@ export class DBMember implements DBMemberData {
     this.discordName = member.discordName;
     this.discordPerms = member.discordPerms;
     this.discordRoles = member.discordRoles;
-    this.inGameName = member.inGameName;
-    this.inaraName = member.inaraName;
     this.joinDate = member.joinDate;
-    this.joinedInaraSquadron = member.joinedInaraSquadron;
-    this.joinedSquadron = member.joinedSquadron;
-    this.applicationStatus = member.applicationStatus;
-    this.revisionMessages = member.revisionMessages;
 
   }
 
@@ -71,58 +46,9 @@ export class DBMember implements DBMemberData {
 
   }
 
-  async createRevisionRequest(authorDiscordId: string, inputs: CreateRevisionRequestOptions): Promise<boolean> {
-    
-    const res = await HTTPMembers.createRevisionRequest(this._id, authorDiscordId, inputs);
-    return res.success;
-
-  }
-
-  async edit(authorDiscordId: string | null, inputs: EditOptions): Promise<boolean> {
-    
-    const res = await HTTPMembers.edit(this._id, authorDiscordId, inputs);
-    return res.success;
-
-  }
-
   async update(): Promise<boolean> {
     
     const res = await HTTPMembers.update(this._id);
-    return res.success;
-
-  }
-
-  async startApplication(): Promise<boolean> {
-    
-    const res = await HTTPMembers.startApplication(this._id);
-    return res.success;
-
-  }
-  
-  async sendApplicationWarning(): Promise<boolean> {
-    
-    const res = await HTTPMembers.sendApplicationWarning(this._id);
-    return res.success;
-
-  }
-
-  async resetApplication(): Promise<boolean> {
-    
-    const res = await HTTPMembers.resetApplication(this._id);
-    return res.success;
-
-  }
-
-  async completeApplication(authorDiscordId: string): Promise<boolean> {
-    
-    const res = await HTTPMembers.completeApplication(this._id, authorDiscordId)
-    return res.success;
-
-  }
-
-  async revertApplication(authorDiscordId: string): Promise<boolean> {
-    
-    const res = await HTTPMembers.revertApplication(this._id, authorDiscordId)
     return res.success;
 
   }

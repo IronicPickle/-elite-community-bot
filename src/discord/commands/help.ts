@@ -22,8 +22,8 @@ export default class Help extends Command {
 
     new Promise(async () => {
 
-      const channel = commandoMessage.channel;
       const guildMember = commandoMessage.member;
+      if(guildMember == null) return null;
 
       commandoMessage.reply("I've sent you a DM with the help menu.");
       guildMember.send(StringBuilder.help(guildMember), { split: true });

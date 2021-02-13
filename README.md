@@ -1,5 +1,5 @@
-# Elite: Dangerous Squadron Management Companion
-Used in conjunction with https://github.com/IronicPickle/elite-community-master/ to create an interactive squadron management system for Elite: Dangerous.<br/>
+# Community Web Server: Companion
+Used in conjunction with https://github.com/IronicPickle/community-server-master/.<br/>
 The companion server interfaces with discord, via a discord bot, funneling data and updates to the master server.
 
 *Note: Both servers must be hosted simultaneously and must have each other's address configured.*

@@ -26,6 +26,7 @@ export default class ConfigLogChannel extends Command {
     new Promise(async () => {
 
       const guildMember = commandoMessage.member;
+      if(guildMember == null) return null;
 
       const promptMessage = <Message> await commandoMessage.say("Loading...");
       const inputListener = new InputListener(this.client, promptMessage, guildMember);

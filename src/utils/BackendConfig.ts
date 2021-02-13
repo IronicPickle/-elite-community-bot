@@ -63,7 +63,7 @@ export default class BackendConfig {
 
   public static load() {
 
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       fs.readFile(this.path, { encoding: "utf-8" }, (err: NodeJS.ErrnoException | null, data: string) => {
         if(err) {
           this.generate();

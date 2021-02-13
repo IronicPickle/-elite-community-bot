@@ -27,6 +27,7 @@ export default class ConfigWebPerm extends Command {
     new Promise(async () => {
 
       const guildMember = commandoMessage.member;
+      if(guildMember == null) return null;
 
       const promptMessage = <Message> await commandoMessage.say("Loading...");
 

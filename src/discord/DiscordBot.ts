@@ -29,7 +29,7 @@ export default class DiscordBot {
 
       this.client.on("ready", () => {
         const clientUser = this.client.user;
-        if(clientUser) clientUser.setActivity(" Loads of Data!", { type: "LISTENING" });
+        if(clientUser) clientUser.setActivity(" Loads of Data!", { type: 2 });
         resolve();
       });
 

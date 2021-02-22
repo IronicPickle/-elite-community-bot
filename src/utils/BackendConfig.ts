@@ -40,8 +40,7 @@ const backendConfigSchema: Schema = {
     master: {
       type: "object",
       properties: {
-        url: { type: "string" },
-        publicUrl: { type: [ "string", "null" ] }
+        url: { type: "string" }
       }
     },
     discord: {
@@ -52,7 +51,8 @@ const backendConfigSchema: Schema = {
         ownerIds: { type: "array" }
       }
     },
-    token: { type: [ "string", "null" ] }
+    token: { type: [ "string", "null" ] },
+    publicUrl: { type: [ "string", "null" ] }
   }
 }
 

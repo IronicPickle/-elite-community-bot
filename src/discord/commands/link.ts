@@ -23,7 +23,7 @@ export default class Link extends Command {
 
     new Promise(async () => {
 
-      const publicUrl = backendConfig.master.url;
+      const publicUrl = backendConfig.publicUrl;
       commandoMessage.reply(`Here you go ${publicUrl}.`);
 
     }).catch((err: Error) => {

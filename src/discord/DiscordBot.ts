@@ -33,9 +33,15 @@ export default class DiscordBot {
         resolve();
       });
 
-      this.client.on("error", logger.error);
+      this.client.on("error", (err: Error) => {
+        logger.error(err);
+      });
 
-      this.client.on("debug", logger.info);
+      if(process.env.NODE_ENV === "development") {
+        this.client.on("debug", (debug: string) => {
+          logger.info(debug);
+        });
+      }
 
       this.client.login(this.token);
 

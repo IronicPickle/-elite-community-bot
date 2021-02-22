@@ -11,14 +11,14 @@ export default class NodeServer {
   public port: number;
 
   private server: Express;
-  private httpInstance: http.Server | null;
+  private httpServer: http.Server | null;
   private publicPath: string;
 
   constructor() {
     this.port = backendConfig.port;
 
     this.server = express();
-    this.httpInstance = null;
+    this.httpServer = null;
     
     this.publicPath = path.join(__dirname, "../../client/build");
     this.server.use(express.static(this.publicPath));
@@ -32,8 +32,8 @@ export default class NodeServer {
       const server = this.server;
       const port = this.port;
 
-      this.httpInstance = server.listen(port, () => {
-        if(!this.httpInstance) {
+      this.httpServer = server.listen(port, () => {
+        if(!this.httpServer) {
           reject("[HTTP] No HTTP instance found"); return;
         }
 
@@ -43,7 +43,7 @@ export default class NodeServer {
         });
 
         for(const i in routes) {
-          server.use(i, routes[i]);
+          server.use(i, routes[i](this.httpServer));
           logger.info(`[Node] Registered route '${i}'`);
         }
 

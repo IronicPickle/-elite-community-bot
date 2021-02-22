@@ -5,17 +5,17 @@ import InputListener from "../objects/InputListener";
 import StringBuilders from "../utils/StringBuilders";
 import { logger } from "../../app";
 
-export default class ConfigLogChannel extends Command {
+export default class ConfigNewsChannel extends Command {
 
   constructor(client: Client) {
 
     super(client, {
-      name: "config-log-channel",
+      name: "config-news-channel",
       aliases: [],
       group: "config",
-      memberName: "config-log-channel",
-      description: "Configures a channel to be used for event logging. e.g. users joining",
-      userPermissions: [ config.permissions["config-log-channel"] ],
+      memberName: "config-news-channel",
+      description: "Configures a channel to be used for news posts made via the web portal.",
+      userPermissions: [ config.permissions["config-news-channel"] ],
       guildOnly: true,
       throttling: { usages: 2, duration: 10 }
     });
@@ -31,15 +31,15 @@ export default class ConfigLogChannel extends Command {
       const promptMessage = <Message> await commandoMessage.say("Loading...");
       const inputListener = new InputListener(this.client, promptMessage, guildMember);
 
-      inputListener.start("# the channel you would like to use for logging.", async (listenerMessage?: Message) => {
+      inputListener.start("# the channel you would like to use for news posts.", async (listenerMessage?: Message) => {
         if(!listenerMessage) return promptMessage.edit("\`Cancelled\`");
         const channel = listenerMessage.mentions.channels.first();
         if(!channel) return inputListener.start("You must # a channel.");
         
-        config.logChannelId = channel.id;
+        config.newsChannelId = channel.id;
         Config.save();
 
-        await promptMessage.edit(`${channel} will now be used as the log channel.`);
+        await promptMessage.edit(`${channel} will now be used as the news channel.`);
       });
 
     }).catch((err: Error) => {

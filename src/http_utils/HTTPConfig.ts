@@ -3,7 +3,7 @@ import { PermissionString } from "discord.js";
 import { logger } from "../app";
 
 export interface WebConfigData {
-  permissions: { [key: string]: PermissionString };
+  permissions: { [key: string]: PermissionString | "ANYONE" };
 }
 
 export interface QueryData {

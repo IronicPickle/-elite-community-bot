@@ -30,7 +30,7 @@ export default class HTTPMethods {
         simple: false,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${backendConfig.master.token}`
+          "Authorization": `Bearer ${backendConfig.token}`
         }
       });
       return Promise.resolve(JSON.parse(res));
@@ -48,7 +48,7 @@ export default class HTTPMethods {
         simple: false,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${backendConfig.master.token}`
+          "Authorization": `Bearer ${backendConfig.token}`
         }, body: JSON.stringify(body)
       });
       return Promise.resolve(JSON.parse(res));
@@ -66,7 +66,7 @@ export default class HTTPMethods {
         simple: false,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${backendConfig.master.token}`
+          "Authorization": `Bearer ${backendConfig.token}`
         }, body: JSON.stringify(body)
       });
       return Promise.resolve(JSON.parse(res));

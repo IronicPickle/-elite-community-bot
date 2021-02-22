@@ -6,29 +6,38 @@ import { Validator, Schema } from "jsonschema";
 
 interface ConfigSchema {
   guildId: string | null;
-  logChannelId: string | null,
+  logChannelId: string | null;
+  newsChannelId: string | null;
+  serverCategoryId: string | null;
   permissions: { [key: string]: PermissionString };
 }
 
 const defaultConfig: ConfigSchema = {
   guildId: null,
   logChannelId: null,
+  newsChannelId: null,
+  serverCategoryId: null,
   permissions: {
     // Group Help
     "help": "SEND_MESSAGES",
+
+    // Group: Main
+    "link": "SEND_MESSAGES",
 
     // Group: Management
     "check": "MANAGE_MESSAGES",
     "check-all": "ADMINISTRATOR",
 
-    // Group: Main
-    "link": "SEND_MESSAGES",
-
     // Group: Config
     "setup": "ADMINISTRATOR",
+
     "config-discord-perm": "ADMINISTRATOR",
     "config-web-perm": "ADMINISTRATOR",
+    
     "config-log-channel": "ADMINISTRATOR",
+    "config-news-channel": "ADMINISTRATOR",
+    "config-server-category": "ADMINISTRATOR",
+
     "view-discord-perms": "MANAGE_MESSAGES",
     "view-web-perms": "MANAGE_MESSAGES"
     
@@ -57,9 +66,14 @@ const configSchema: Schema = {
 
         // Group: Config
         "setup": { type: "string" },
+
         "config-discord-perm": { type: "string" },
         "config-web-perm": { type: "string" },
+
         "config-log-channel": { type: "string" },
+        "config-news-channel": { type: "string" },
+        "config-server-category": { type: "string" },
+
         "view-discord-perms": { type: "string" },
         "view-web-perms": { type: "string" }
       }

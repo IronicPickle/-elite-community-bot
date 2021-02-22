@@ -5,17 +5,17 @@ import InputListener from "../objects/InputListener";
 import StringBuilders from "../utils/StringBuilders";
 import { logger } from "../../app";
 
-export default class ConfigLogChannel extends Command {
+export default class ConfigServerCategory extends Command {
 
   constructor(client: Client) {
 
     super(client, {
-      name: "config-log-channel",
+      name: "config-server-category",
       aliases: [],
       group: "config",
-      memberName: "config-log-channel",
-      description: "Configures a channel to be used for event logging. e.g. users joining",
-      userPermissions: [ config.permissions["config-log-channel"] ],
+      memberName: "config-server-category",
+      description: "Configures a category to be used for server channels.",
+      userPermissions: [ config.permissions["config-server-category"] ],
       guildOnly: true,
       throttling: { usages: 2, duration: 10 }
     });
@@ -25,21 +25,23 @@ export default class ConfigLogChannel extends Command {
 
     new Promise(async () => {
 
+      const guild = commandoMessage.guild;
       const guildMember = commandoMessage.member;
       if(guildMember == null) return null;
 
       const promptMessage = <Message> await commandoMessage.say("Loading...");
       const inputListener = new InputListener(this.client, promptMessage, guildMember);
 
-      inputListener.start("# the channel you would like to use for logging.", async (listenerMessage?: Message) => {
-        if(!listenerMessage) return promptMessage.edit("\`Cancelled\`");
-        const channel = listenerMessage.mentions.channels.first();
-        if(!channel) return inputListener.start("You must # a channel.");
+      inputListener.start("Input the ID of the category you would like to use for servers.", async (listenerMessage?: Message) => {
+        if(listenerMessage == null) return promptMessage.edit("\`Cancelled\`");
+        const category = commandoMessage.guild.channels.resolve(listenerMessage.content);
+        if(category == null) return inputListener.start("You must use a category ID.");
+        if(category.type != "category") return inputListener.start("You reference use a category.");
         
-        config.logChannelId = channel.id;
+        config.serverCategoryId = category.id;
         Config.save();
 
-        await promptMessage.edit(`${channel} will now be used as the log channel.`);
+        await promptMessage.edit(`${category} will now be used as the category for servers.`);
       });
 
     }).catch((err: Error) => {

@@ -1,7 +1,7 @@
 import { CommandoClient } from "discord.js-commando";
-import { GuildMember, Role } from "discord.js";
+import { GuildMember, PartialGuildMember, Role } from "discord.js";
 import HTTPMembers from "../http_utils/HTTPMembers";
-import discord from "../utils/discord";
+import DiscordUtils from "../utils/DiscordUtils";
 import fetchDbMember from "./objects/DBMember";
 import StringBuilder from "./utils/StringBuilders";
 import { logger } from "../app";
@@ -18,22 +18,22 @@ export abstract class GuildMemberAdd {
       logger.debug(`[Discord] Event: guildMemberAdd`);
       const res = await HTTPMembers.create({ discordId: guildMember.id });
       if(res.success) {
-        discord.log(`\`🚪 ${guildMember.displayName} has just joined the server for the first time.\``);
+        DiscordUtils.log(`\`🚪 ${guildMember.displayName} has just joined the server for the first time.\``);
         guildMember.send(StringBuilder.welcomeFirstTime(guildMember));
       } else {
         const dbMember = await fetchDbMember(guildMember.id);
         if(!dbMember) return;
-        discord.log(`\`🚪 ${guildMember.displayName} has just re-joined the server.\``);
+        DiscordUtils.log(`\`🚪 ${guildMember.displayName} has just re-joined the server.\``);
         guildMember.send(StringBuilder.welcomeBack(guildMember, dbMember));
       }
     });
 
-    client.on("guildMemberRemove", async (guildMember: GuildMember) => {
+    client.on("guildMemberRemove", async (guildMember: GuildMember | PartialGuildMember) => {
       logger.debug(`[Discord] Event: guildMemberRemove`);
-      discord.log(`\`🏃 ${guildMember.displayName} has just left the server.\``);
+      DiscordUtils.log(`\`🏃 ${guildMember.displayName} has just left the server.\``);
     });
 
-    client.on("guildMemberUpdate", async (oldGuildMember: GuildMember, guildMember: GuildMember) => {
+    client.on("guildMemberUpdate", async (oldGuildMember: GuildMember | PartialGuildMember, guildMember: GuildMember | PartialGuildMember) => {
       logger.debug(`[Discord] Event: guildMemberUpdate`);
       const dbMember = await fetchDbMember(guildMember.id);
       if(!dbMember) return;

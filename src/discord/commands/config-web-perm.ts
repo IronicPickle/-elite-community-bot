@@ -36,7 +36,8 @@ export default class ConfigWebPerm extends Command {
 
       const whitelisted: string[] = Object.keys(res.data.config.permissions);
       const whitelistedParsed: string = "```Configurable Actions:\n> " + whitelisted.toString().replace(/,/g, "\n> ") + "```";
-      const permissionsParsed: string = "```User Permissions:\n> " + Object.keys(Permissions.FLAGS).toString().replace(/,/g, "\n> ") + "```";
+      const permissions = [ ...Object.keys(Permissions.FLAGS), "ANYONE" ];
+      const permissionsParsed: string = "```User Permissions:\n> " + permissions.toString().replace(/,/g, "\n> ") + "```";
 
       const inputListener = new InputListener(this.client, promptMessage, guildMember);
 
@@ -48,7 +49,7 @@ export default class ConfigWebPerm extends Command {
         inputListener.start(`Provide the user permission you would like to bind.\n${permissionsParsed}`, async (listenerMessage?: Message) => {
           if(!listenerMessage) return promptMessage.edit("\`Cancelled\`");
           const permission = listenerMessage.content.toUpperCase();
-          if(!Object.keys(Permissions.FLAGS).includes(permission)) return inputListener.start(`You must provide one of the following user permissions.\n${permissionsParsed}`);
+          if(!permissions.includes(permission)) return inputListener.start(`You must provide one of the following user permissions.\n${permissionsParsed}`);
 
           const res = await HTTPConfig.edit(action, permission);
           if(!res.success) return promptMessage.edit(StringBuilders.internalError());

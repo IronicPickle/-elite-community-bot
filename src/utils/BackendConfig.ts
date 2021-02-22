@@ -6,29 +6,29 @@ import { Validator, Schema } from "jsonschema";
 interface BackendConfigSchema {
   port: number,
   master: {
-    url: string,
-    token: string | null,
-    publicUrl: string | null
+    url: string
   },
   discord: {
     token: string | null,
     prefix: string,
     ownerIds: string[]
-  }
+  },
+  publicUrl: string | null,
+  token: string | null
 }
 
 const defaultBackendConfig: BackendConfigSchema = {
   port: 8081,
   master: {
-    url: "http://localhost:8080",
-    token: null,
-    publicUrl: null
+    url: "http://localhost:8080"
   },
   discord: {
     token: null,
     prefix: "!",
     ownerIds: []
-  }
+  },
+  publicUrl: null,
+  token: null
 }
 
 export let backendConfig: BackendConfigSchema = JSON.parse(JSON.stringify(defaultBackendConfig));
@@ -41,7 +41,6 @@ const backendConfigSchema: Schema = {
       type: "object",
       properties: {
         url: { type: "string" },
-        token: { type: [ "string", "null" ] },
         publicUrl: { type: [ "string", "null" ] }
       }
     },
@@ -52,7 +51,8 @@ const backendConfigSchema: Schema = {
         prefix: { type: "string" },
         ownerIds: { type: "array" }
       }
-    }
+    },
+    token: { type: [ "string", "null" ] }
   }
 }
 

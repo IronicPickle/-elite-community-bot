@@ -34,7 +34,7 @@ logger.info("[Node] Initialising");
 
 Config.load().then(() => {
   BackendConfig.load().then(() => {
-    if(!backendConfig.master.token) throw new Error("[Config] No master token configured");
+    if(!backendConfig.token) throw new Error("[Config] No master token configured");
     nodeServer = new NodeServer();
     discordBot = new DiscordBot();
     const environment = process.env.NODE_ENV;

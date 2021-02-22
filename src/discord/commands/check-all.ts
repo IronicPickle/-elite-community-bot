@@ -46,7 +46,6 @@ export default class Join extends Command {
         if(!res.data) return promptMessage.edit("No members found in database.");
 
         const dbMembers = res.data.members;
-        console.log(await guild.members.fetch())
         const guildMembers = await guild.members.fetch();
 
         let addedGuildMembers: GuildMember[] = [];

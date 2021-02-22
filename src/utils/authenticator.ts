@@ -14,6 +14,6 @@ function checkToken(token?: string): boolean {
   if(!token) return false;
   if(!token.startsWith("Bearer ")) return false;
 
-  return backendConfig.master.token === token.substr(7);
+  return backendConfig.token === token.substr(7);
 
 }

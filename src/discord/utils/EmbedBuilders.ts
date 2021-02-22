@@ -1,45 +1,59 @@
-import { User, MessageEmbed, GuildMember } from "discord.js";
-import moment from "moment";
-import { DBMember } from "../objects/DBMember";
-import discord from "../../utils/discord";
-import { config } from "../../utils/Config";
+import { MessageEmbed, GuildMember } from "discord.js";
+import { DBNewsPost, DBServer, DBServerPost, ServerType } from "../../routes/api";
 
 export default class EmbedBuilders {
-  /*
-  public static applicationInfo(user: User | null, data: DBMember): MessageEmbed {
 
-    const stages = ["Not Started", "In Progress", "Reviewed", "Completed"];
-    const revisions = data.revisionMessages;
+  public static newsPost(author: GuildMember, newsPost: DBNewsPost): MessageEmbed {
 
     const embed = new MessageEmbed()
-      .setColor("#fdcb0e")
-      .setTitle("Application Viewer")
-      .setThumbnail(`${(user?.avatarURL()) ? user.avatarURL() : "https://i.imgur.com/2XrLeX2.png"}`)
-      .setDescription(`Viewing ${(user) ? user : "Unknown User"}'s Application`)
+      .setColor("#94ae3f")
+      .setTitle(newsPost.title)
+      .setThumbnail(author.user.avatarURL() || "https://i.gyazo.com/b7751aabc8a5d75d312a2a1e2eb2967f.png")
+      .setDescription(`@everyone\n${newsPost.body}`)
       .addFields(
-        { name: "In-Game Name", value: `${(data.inGameName) ? data.inGameName : "N/A"}`, inline: true },
-        { name: "Inara Name", value: `${(data.inaraName) ? data.inaraName : "N/A"}`, inline: true },
-
-        { name: "Stage", value: `${(data.applicationStatus) ? stages[data.applicationStatus.stage] : "N/A"}`, inline: false },
-
-        { name: "Joined Squadron", value: `${(data.joinedSquadron) ? "✅" : "❌"}`, inline: true },
-        { name: "Joined Inara Squadron", value: `${(data.joinedInaraSquadron) ? "✅" : "❌"}`, inline: true }
-        
+        { name: "Post made by", value: author, inline: true }
       )
-
-    for(const i in revisions) {
-      const revision = revisions[i];
-      const authorGuildMember = discord.getMember(revision.authorId);
-      if(authorGuildMember) {
-        embed.addField(
-          `Revision ${parseInt(i) + 1}`,
-          `${revision.text}\n*by ${authorGuildMember}*\n\`${moment(new Date(revision.creationDate)).fromNow()} | ${moment(new Date(revision.creationDate)).format("Do MMM YYYY, hh:mm a")}\``
-        );
-      }
-    }
 
     return embed;
 
   }
-  */
+
+  public static serverMessage(server: DBServer): MessageEmbed {
+
+    const fullAddress = server.address + ((server.port.length === 0) ? "" : `:${server.port}`);
+
+    const embed = new MessageEmbed()
+      .setColor("#94ae3f")
+      .setTitle(server.name)
+      .setThumbnail(getGameLogo(server.type) || "https://i.gyazo.com/b7751aabc8a5d75d312a2a1e2eb2967f.png")
+      .setDescription(server.description)
+      .addFields(
+        { name: "Address", value: fullAddress, inline: true }
+      )
+
+    return embed;
+
+  }
+
+  public static serverPost(author: GuildMember, serverPost: DBServerPost): MessageEmbed {
+
+    const embed = new MessageEmbed()
+      .setColor("#243754")
+      .setTitle(serverPost.title)
+      .setThumbnail(author.user.avatarURL() || "https://i.gyazo.com/b7751aabc8a5d75d312a2a1e2eb2967f.png")
+      .setDescription(`@everyone\n${serverPost.body}`)
+      .addFields(
+        { name: "Post made by", value: author, inline: true }
+      )
+
+    return embed;
+
+  }
+
+}
+
+function getGameLogo(type: ServerType) {
+  if(type === "minecraft") return "https://i.gyazo.com/c82d9c34c9d4ffc0cd03e2f9da726423.png";
+  if(type === "arma3") return "https://i.gyazo.com/8a7e026cef401becbf9dc90310201a47.png";
+  return null;
 }

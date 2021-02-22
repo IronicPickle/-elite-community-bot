@@ -69,6 +69,10 @@ export default class StringBuilder {
     string += "\n\n__We would **recommend** you do the following before using the bot__";
     string += `\n- Use \`config-log-channel\` to configure a log channel. (Optional)`;
     string += `\n  This channel is used to log events such as users joining, applications starting and applications completing.`;
+    string += `\n- Use \`config-news-channel\` to configure a news channel. (Optional)`;
+    string += `\n  This channel will be used to broadcast all news posts made via the web portal.`;
+    string += `\n- Use \`config-servers-category\` to configure a server category. (Optional)`;
+    string += `\n  Channels will be created under this category for servers, and thus servers posts, when they are created via the web portal.`;
 
     string += "\n\n__It is also **helpful** to do the following too__";
     string += `\n- Use \`view-discord-perms\` to view a list of discord permissions.`;

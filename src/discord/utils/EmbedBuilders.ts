@@ -55,5 +55,6 @@ export default class EmbedBuilders {
 function getGameLogo(type: ServerType) {
   if(type === "minecraft") return "https://i.gyazo.com/c82d9c34c9d4ffc0cd03e2f9da726423.png";
   if(type === "arma3") return "https://i.gyazo.com/8a7e026cef401becbf9dc90310201a47.png";
+  if(type === "valheim") return "https://i.gyazo.com/88755deb50b43e6dafb72e75f8f16156.png";
   return null;
 }
